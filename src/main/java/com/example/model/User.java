@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User extends AbstractEntity {
+	
     @Column(name="name")
     private String name;
 

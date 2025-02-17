@@ -7,6 +7,7 @@ import com.example.dto.resquest.UserRequestDTO;
 import com.example.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Tag(name = "User Controller")
 //@RequiredArgsConstructor
 public class UserController {
-
-    @Autowired
-    private UserService userService;
-
-    @PostMapping(value = "/")
+	
+    private final UserService userService;
+	
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
+	
+	@PostMapping(value = "/")
     public long addUser(@RequestBody UserRequestDTO user) {
         
             long userId = userService.saveUser(user);

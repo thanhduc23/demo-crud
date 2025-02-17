@@ -5,6 +5,7 @@ import com.example.dto.response.UserDetailResponse;
 import com.example.dto.resquest.UserRequestDTO;
 import com.example.model.User;
 import com.example.service.UserService;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.example.repository.UserRepository;
@@ -17,10 +18,14 @@ import org.springframework.data.domain.PageRequest;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Override
+	
+    private final UserRepository userRepository;
+	
+	public UserServiceImpl(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	@Override
     public long saveUser(UserRequestDTO request) {
         User user = new User();
         user.setName(request.getName());
@@ -47,7 +52,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetailResponse getUser(long userId) {
         User user = getUserById(userId);
-        return UserDetailResponse.builder()
+		//map struct, model mapper
+		//UserDTO userDTO = MapStruct.toDTO(user);
+		return UserDetailResponse.builder()
                 .id(userId)
                 .name(user.getName())
                 .email(user.getEmail())
@@ -55,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResponse getAllUsers(int pageNo, int pageSize) {
+    public PageResponse getAllUsers(int pageNo, int pageSize) { //Pageable
         Page<User> page = userRepository.findAll(PageRequest.of(pageNo, pageSize));
 
         List<UserDetailResponse> list = page.stream().map(user -> UserDetailResponse.builder()

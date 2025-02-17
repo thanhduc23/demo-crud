@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: demo
   devtools:
     add-properties: true
   datasource:
