@@ -11,4 +11,5 @@ public class EmailRequest {
     private String subject;
     private String name;
     private String message;
+    private String signature;
 }
