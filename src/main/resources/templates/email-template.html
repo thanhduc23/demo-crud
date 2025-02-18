@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Email Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <h1 th:text="'Xin chào, ' + ${name} + '!'"></h1>
+    <p th:text="${message}"></p>
+    <p>Trân trọng,</p>
+    <p th:text="${signature}"></p>
+  </body>
+</html>

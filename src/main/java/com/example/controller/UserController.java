@@ -1,24 +1,25 @@
 package com.example.controller;
 
-import com.example.dto.response.PageResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.dto.response.ResponseData;
 import com.example.dto.response.UserDetailResponse;
 import com.example.dto.resquest.UserRequestDTO;
 import com.example.model.User;
 import com.example.service.UserService;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/user")
@@ -37,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public ResponseData<PageResponse> getAllUsers(@RequestParam(defaultValue = "0", required = false) int pageNo, @RequestParam(defaultValue = "20", required = false) int pageSize) {
-        PageResponse<?> users = userService.getAllUsers(pageNo, pageSize);
+    public ResponseData<Page<UserDetailResponse>> getAllUsers(Pageable pageable) {
+        Page<UserDetailResponse> users = userService.getAllUsers(pageable);
         return new ResponseData<>(HttpStatus.OK.value(), "users", users);
     }
 

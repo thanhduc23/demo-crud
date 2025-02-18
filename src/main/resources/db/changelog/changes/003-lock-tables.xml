@@ -3,9 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <!-- Include các changelog con -->
-    <include file="db/changelog/changes/001-create-tables.xml" />
-    <include file="db/changelog/changes/002-insert-sample-data.xml" />
-    <include file="db/changelog/changes/003-lock-tables.xml" />
+    <changeSet id="003" author="Thành Đức">
+        <sql>
+            UPDATE databasechangeloglock SET locked = true WHERE id = 1;
+        </sql>
+    </changeSet>
 
-</databaseChangeLog> 
+</databaseChangeLog>

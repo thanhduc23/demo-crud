@@ -1,15 +1,24 @@
 package com.example.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.response.BrandDetailResponse;
-import com.example.dto.response.PageResponse;
 import com.example.dto.response.ResponseData;
 import com.example.dto.resquest.BrandRequestDTO;
 import com.example.service.BrandService;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/brand")
@@ -26,11 +35,10 @@ public class BrandController {
     }
 
     @GetMapping("/")
-    public ResponseData<PageResponse> getAllBrands(
-            @RequestParam(defaultValue = "0", required = false) int pageNo,
-            @RequestParam(defaultValue = "20", required = false) int pageSize) {
-        PageResponse response = brandService.getAllBrands(pageNo, pageSize);
-        return new ResponseData<>(HttpStatus.OK.value(), "brands", response);
+    public ResponseData<Page<BrandDetailResponse>> getAllBrands(Pageable pageable) {
+        Page<BrandDetailResponse> brands = brandService.getAllBrands(pageable);
+        return new ResponseData<>(HttpStatus.OK.value(), "brands", brands);
+
     }
 
     @GetMapping("/{brandId}")

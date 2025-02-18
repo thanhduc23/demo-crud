@@ -183,4 +183,20 @@
         </insert>
     </changeSet>
 
+    <!-- Insert thêm users để test -->
+    <changeSet id="011" author="Thành Đức">
+        <insert tableName="users">
+            <column name="name">Phạm Thị D</column>
+            <column name="email">phamthid@example.com</column>
+        </insert>
+        <insert tableName="users">
+            <column name="name">Hoàng Văn E</column>
+            <column name="email">hoangvane@example.com</column>
+        </insert>
+        <insert tableName="users">
+            <column name="name">Đỗ Thị F</column>
+            <column name="email">dothif@example.com</column>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog> 

@@ -1,23 +1,17 @@
 package com.example.service.impl;
 
-import com.example.dto.response.PageResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.example.dto.response.UserDetailResponse;
 import com.example.dto.resquest.UserRequestDTO;
 import com.example.model.User;
-import com.example.service.UserService;
-import com.example.util.mappper.UserMapper;
-
-import org.springframework.stereotype.Service;
-
 import com.example.repository.UserRepository;
+import com.example.service.UserService;
+import com.example.util.mapper.UserMapper;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
-// TODO : dùng MapStruct thay builder
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -53,19 +47,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResponse getAllUsers(int pageNo, int pageSize) {
-        Page<User> page = userRepository.findAll(PageRequest.of(pageNo, pageSize));
-
-        List<UserDetailResponse> list = page.stream()
-                .map(userMapper::toDto)
-                .toList();
-
-        return PageResponse.builder()
-                .pageNo(pageNo)
-                .pageSize(pageSize)
-                .totalPage(page.getTotalPages())
-                .items(list)
-                .build();
+    public Page<UserDetailResponse> getAllUsers(Pageable pageable) {
+        Page<User> userPage = userRepository.findAll(pageable);
+        return userMapper.toDtoPage(userPage);
     }
 
     private User getUserById(long userId) {

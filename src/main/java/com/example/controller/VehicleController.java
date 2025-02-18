@@ -1,15 +1,26 @@
 package com.example.controller;
 
-import com.example.dto.response.PageResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.dto.response.ResponseData;
 import com.example.dto.response.VehicleDetailResponse;
 import com.example.dto.resquest.VehicleRequestDTO;
 import com.example.dto.resquest.VehicleSearchDTO;
 import com.example.service.VehicleService;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vehicle")
@@ -26,10 +37,8 @@ public class VehicleController {
     }
 
     @GetMapping("/")
-    public ResponseData<PageResponse> getAllVehicles(
-            @RequestParam(defaultValue = "0", required = false) int pageNo,
-            @RequestParam(defaultValue = "20", required = false) int pageSize) {
-        PageResponse response = vehicleService.getAllVehicles(pageNo, pageSize);
+    public ResponseData<Page<VehicleDetailResponse>> getAllVehicles(@PageableDefault(page = 0, size = 20) Pageable pageable) {
+        Page<VehicleDetailResponse> response = vehicleService.getAllVehicles(pageable);
         return new ResponseData<>(HttpStatus.OK.value(), "vehicles", response);
     }
 
@@ -52,19 +61,17 @@ public class VehicleController {
     }
 
     @PostMapping("/search")
-    public ResponseData<PageResponse> searchVehicles(
+    public ResponseData<Page<VehicleDetailResponse>> searchVehicles(
             @RequestBody VehicleSearchDTO searchDTO,
-            @RequestParam(defaultValue = "0", required = false) int pageNo,
-            @RequestParam(defaultValue = "20", required = false) int pageSize) {
-        PageResponse response = vehicleService.searchVehicles(searchDTO, pageNo, pageSize);
+            @PageableDefault(page = 0, size = 20) Pageable pageable) {
+        Page<VehicleDetailResponse> response = vehicleService.searchVehicles(searchDTO, pageable);
         return new ResponseData<>(HttpStatus.OK.value(), "vehicles", response);
     }
 
     @GetMapping("/special-condition")
-    public ResponseData<PageResponse> getVehiclesBySpecialCondition(
-            @RequestParam(defaultValue = "0", required = false) int pageNo,
-            @RequestParam(defaultValue = "20", required = false) int pageSize) {
-        PageResponse response = vehicleService.findVehiclesBySpecialCondition(pageNo, pageSize);
+    public ResponseData<Page<VehicleDetailResponse>> getVehiclesBySpecialCondition(
+            @PageableDefault(page = 0, size = 20) Pageable pageable) {
+        Page<VehicleDetailResponse> response = vehicleService.findVehiclesBySpecialCondition(pageable);
         return new ResponseData<>(HttpStatus.OK.value(), "vehicles", response);
     }
 }
