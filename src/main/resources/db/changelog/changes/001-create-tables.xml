@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Tạo enum vehicle_type -->
+    <changeSet id="001" author="Thành Đức">
+        <sql>
+            CREATE TYPE vehicle_type AS ENUM ('CAR', 'TRUCK', 'BUS');
+        </sql>
+    </changeSet>
+
+    <!-- Tạo bảng brands -->
+    <changeSet id="002" author="Thành Đức">
+        <createTable tableName="brands">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="type" type="vehicle_type">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Tạo bảng users -->
+    <changeSet id="003" author="Thành Đức">
+        <createTable tableName="users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Tạo bảng vehicles -->
+    <changeSet id="004" author="Thành Đức">
+        <createTable tableName="vehicles">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="manufacture_year" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="price" type="numeric(15,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="owner_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="brand_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+            <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="vehicles" baseColumnNames="owner_id" constraintName="fk_vehicles_owner" referencedTableName="users" referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="vehicles" baseColumnNames="brand_id" constraintName="fk_vehicles_brand" referencedTableName="brands" referencedColumnNames="id" />
+
+        <!-- <sql>
+            ALTER TABLE vehicles 
+            ADD CONSTRAINT check_manufacture_year 
+            CHECK (manufacture_year > 1900 AND manufacture_year <= EXTRACT(YEAR FROM CURRENT_DATE));
+
+            ALTER TABLE vehicles 
+            ADD CONSTRAINT check_price 
+            CHECK (price > 0);
+        </sql> -->
+    </changeSet>
+
+</databaseChangeLog> 

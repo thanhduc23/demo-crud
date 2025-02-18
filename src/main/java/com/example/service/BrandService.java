@@ -11,3 +11,4 @@ public interface BrandService {
     BrandDetailResponse getBrand(long brandId);
     PageResponse getAllBrands(int pageNo, int pageSize);
 }
+    

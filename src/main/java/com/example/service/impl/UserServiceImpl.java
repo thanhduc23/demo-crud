@@ -5,6 +5,8 @@ import com.example.dto.response.UserDetailResponse;
 import com.example.dto.resquest.UserRequestDTO;
 import com.example.model.User;
 import com.example.service.UserService;
+import com.example.util.mappper.UserMapper;
+
 import org.springframework.stereotype.Service;
 
 import com.example.repository.UserRepository;
@@ -18,25 +20,24 @@ import org.springframework.data.domain.PageRequest;
 // TODO : dùng MapStruct thay builder
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
-    public long saveUser(UserRequestDTO request) {
-        User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
-    
+    public User saveUser(UserRequestDTO request) {
+        User user = userMapper.toEntity(request);
         User savedUser = userRepository.save(user);
-        return savedUser.getId();
+        return savedUser;
     }
 
     @Override
     public void updateUser(long userId, UserRequestDTO request) {
         User user = getUserById(userId);
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
-
+        userMapper.updateEntity(user, request);
         userRepository.save(user);
     }
 
@@ -48,29 +49,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetailResponse getUser(long userId) {
         User user = getUserById(userId);
-        return UserDetailResponse.builder()
-                .id(userId)
-                .name(user.getName())
-                .email(user.getEmail())
-                .build();
+        return userMapper.toDto(user);
     }
 
     @Override
     public PageResponse getAllUsers(int pageNo, int pageSize) {
         Page<User> page = userRepository.findAll(PageRequest.of(pageNo, pageSize));
 
-        List<UserDetailResponse> list = page.stream().map(user -> UserDetailResponse.builder()
-        .id(user.getId())
-        .name(user.getName())
-        .email(user.getEmail())
-        .build()
-        ).toList();
+        List<UserDetailResponse> list = page.stream()
+                .map(userMapper::toDto)
+                .toList();
+
         return PageResponse.builder()
-        .pageNo(pageNo)
-        .pageSize(pageSize)
-        .totalPage(page.getTotalPages())
-        .items(list)
-        .build();
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .totalPage(page.getTotalPages())
+                .items(list)
+                .build();
     }
 
     private User getUserById(long userId) {

@@ -1,6 +1,5 @@
 package com.example.service.impl;
 
-
 import com.example.dto.response.BrandDetailResponse;
 import com.example.dto.response.PageResponse;
 import com.example.dto.resquest.BrandRequestDTO;
@@ -25,7 +24,7 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = new Brand();
         brand.setName(request.getName());
         brand.setType(request.getType());
-        
+
         Brand savedBrand = brandRepository.save(brand);
         return savedBrand.getId();
     }
@@ -35,7 +34,7 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = getBrandById(brandId);
         brand.setName(request.getName());
         brand.setType(request.getType());
-        
+
         brandRepository.save(brand);
     }
 
@@ -53,7 +52,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public PageResponse getAllBrands(int pageNo, int pageSize) {
         Page<Brand> page = brandRepository.findAll(PageRequest.of(pageNo, pageSize));
-        
+
         List<BrandDetailResponse> list = page.stream()
                 .map(this::buildBrandResponse)
                 .toList();

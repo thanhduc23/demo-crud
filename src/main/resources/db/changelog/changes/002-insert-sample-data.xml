@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- Insert dữ liệu mẫu cho bảng brands -->
+    <changeSet id="005" author="Thành Đức">
+        <insert tableName="brands">
+            <column name="name">Toyota</column>
+            <column name="type">CAR</column>
+        </insert>
+        <insert tableName="brands">
+            <column name="name">Honda</column>
+            <column name="type">CAR</column>
+        </insert>
+        <insert tableName="brands">
+            <column name="name">Hyundai</column>
+            <column name="type">TRUCK</column>
+        </insert>
+        <insert tableName="brands">
+            <column name="name">Mercedes-Benz</column>
+            <column name="type">BUS</column>
+        </insert>
+    </changeSet>
+
+    <!-- Insert dữ liệu mẫu cho bảng users -->
+    <changeSet id="006" author="Thành Đức">
+        <insert tableName="users">
+            <column name="name">Nguyễn Văn A</column>
+            <column name="email">nguyenvana@example.com</column>
+        </insert>
+        <insert tableName="users">
+            <column name="name">Trần Thị B</column>
+            <column name="email">tranthib@example.com</column>
+        </insert>
+        <insert tableName="users">
+            <column name="name">Lê Văn C</column>
+            <column name="email">levanc@example.com</column>
+        </insert>
+    </changeSet>
+
+    <!-- Insert dữ liệu mẫu cho bảng vehicles -->
+    <changeSet id="007" author="Thành Đức">
+        <insert tableName="vehicles">
+            <column name="name">Camry 2.5Q</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">1350000000</column>
+            <column name="owner_id">1</column>
+            <column name="brand_id">1</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Civic RS</column>
+            <column name="manufacture_year">2022</column>
+            <column name="price">870000000</column>
+            <column name="owner_id">2</column>
+            <column name="brand_id">2</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Mighty EX8 GT</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">1000000000</column>
+            <column name="owner_id">3</column>
+            <column name="brand_id">3</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Sprinter</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">2500000000</column>
+            <column name="owner_id">1</column>
+            <column name="brand_id">4</column>
+        </insert>
+    </changeSet>
+
+    <!-- Insert thêm dữ liệu cho bảng vehicles -->
+    <changeSet id="008" author="Thành Đức">
+        <insert tableName="vehicles">
+            <column name="name">Land Cruiser 300</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">4500000000</column>
+            <column name="owner_id">2</column>
+            <column name="brand_id">1</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">CR-V RS</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">1350000000</column>
+            <column name="owner_id">3</column>
+            <column name="brand_id">2</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Solati</column>
+            <column name="manufacture_year">2022</column>
+            <column name="price">1200000000</column>
+            <column name="owner_id">1</column>
+            <column name="brand_id">3</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">S450 Luxury</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">5600000000</column>
+            <column name="owner_id">2</column>
+            <column name="brand_id">4</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Vios GR-S</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">720000000</column>
+            <column name="owner_id">3</column>
+            <column name="brand_id">1</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">City RS</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">600000000</column>
+            <column name="owner_id">1</column>
+            <column name="brand_id">2</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Universe</column>
+            <column name="manufacture_year">2022</column>
+            <column name="price">3200000000</column>
+            <column name="owner_id">2</column>
+            <column name="brand_id">3</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">G63 AMG</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">12500000000</column>
+            <column name="owner_id">3</column>
+            <column name="brand_id">4</column>
+        </insert>
+    </changeSet>
+
+    <!-- Insert thêm dữ liệu cho bảng brands -->
+    <changeSet id="009" author="Thành Đức">
+        <insert tableName="brands">
+            <column name="name">Suzuki</column>
+            <column name="type">CAR</column>
+        </insert>
+        <insert tableName="brands">
+            <column name="name">Subaru</column>
+            <column name="type">CAR</column>
+        </insert>
+        <insert tableName="brands">
+            <column name="name">Ssangyong</column>
+            <column name="type">CAR</column>
+        </insert>
+        <insert tableName="brands">
+            <column name="name">Smart</column>
+            <column name="type">CAR</column>
+        </insert>
+    </changeSet>
+
+    <!-- Insert thêm dữ liệu xe cho các hãng mới -->
+    <changeSet id="010" author="Thành Đức">
+        <insert tableName="vehicles">
+            <column name="name">Swift Sport</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">649000000</column>
+            <column name="owner_id">1</column>
+            <column name="brand_id">5</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Forester</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">1200000000</column>
+            <column name="owner_id">2</column>
+            <column name="brand_id">6</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">Rexton</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">1350000000</column>
+            <column name="owner_id">3</column>
+            <column name="brand_id">7</column>
+        </insert>
+        <insert tableName="vehicles">
+            <column name="name">ForTwo</column>
+            <column name="manufacture_year">2023</column>
+            <column name="price">850000000</column>
+            <column name="owner_id">1</column>
+            <column name="brand_id">8</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog> 
